@@ -81,4 +81,23 @@ namespace Hazel
 	{
 		return os << e.ToString();
 	}
+
+	// Specialize fmt::formatter for Event types outside the Hazel namespace
+	template<typename T>
+	struct fmt::formatter<
+		T, std::enable_if_t<std::is_base_of<Hazel::Event, T>::value, char>>
+		: fmt::formatter<std::string>
+	{
+		auto format(const T& event, fmt::format_context& ctx) const
+		{
+			return fmt::format_to(ctx.out(), "{}", event.ToString());
+		}
+	};
+
+	// Utility function for formatting strings with arguments
+	template <typename... T>
+	std::string StringFromArgs(fmt::format_string<T...> fmt, T&&... args)
+	{
+		return fmt::format(fmt, std::forward<T>(args)...);
+	}
 }

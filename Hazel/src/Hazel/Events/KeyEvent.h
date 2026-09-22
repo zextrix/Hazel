@@ -40,10 +40,10 @@ namespace  Hazel
 		
 	};
 
-	class HAZEL_API KeyReleaseEvent : public KeyEvent
+	class HAZEL_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleaseEvent(int keycode)
+		KeyReleasedEvent(int keycode)
 			: KeyEvent(keycode) { }
 
 		std::string ToString() const override
